@@ -1,0 +1,185 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Sign up Page</title>
+
+    <style type="text/css">
+    body{
+       background-color : #F0F0F0;
+    }
+	
+
+
+	.login-form {
+		width: 450px;
+    	
+        margin-top:40px;
+        margin-left:25vw;
+	}
+    .login-form form {
+    	margin-bottom: 15px;
+        background: white;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+    .form-control, .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+    .btn {        
+        font-size: 15px;
+        font-weight: bold;
+        width: 150px;
+        margin-left: 120px;
+    }
+    #receivedData {
+display: block;
+max-height: 500px;
+overflow-y: auto;
+border: 1px solid black; 
+overflow-style: autohiding-scrollbar;
+}
+    table#example {
+    border-collapse: collapse;   
+}
+
+#example td:hover {
+    cursor: pointer;
+}
+</style>
+
+  </head>
+  <body>
+
+  <div class='container'>
+      <div class="login-form">
+    
+ <form action="http://localhost:1238/users/signup" method="POST">
+ <h2 class="text-center">Testing</h2> 
+
+
+  <div class="form-group">
+    <label for="email">Email : </label>
+    <input type="text" class="form-control" id="email" name="email" autocomplete="off">
+  </div>
+  
+   <div id="receivedData">
+      </div>  
+
+</form>
+
+
+    
+</div>
+
+    </div>
+ 
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"  ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+
+  <script>
+
+
+
+
+  $(document).ready(function() {
+     
+
+      //implement datalist and override UI in modern browsers
+    $('#email').on('focus',function(e){
+
+        var table = "<table id='example' class='table table-bordered'><thead class='thead-dark'><tr><th>emp_id</th><th>email</th></tr><thead><tbody>";
+         $.ajax({
+						type: 'GET',
+                        
+						/*data: email : $(this).val().trim(),*/
+				        
+                        url: 'http://localhost:3000/users/search',
+                        data : { "email" : $(this).val()},					
+                        success : (data) =>{
+                            $.each(data,(index, value) =>{
+                             
+                                table = table + "<tr ><td >"+value.emp_id+"</td><td class='emailval'>"+value.name+"</td></tr>";
+                            })
+                            
+                        }
+                    }).done(function() {
+    console.log( "second success" );
+    table = table + "</tbody></table>";
+    $("#receivedData").html(table);
+  })
+  .fail(function() {
+    console.log( "error" );
+  })
+  .always(function() {
+    console.log( "complete" );
+  });
+
+    });
+  
+     $('#email').on('input',function(e){
+         
+  
+
+
+        var table = "";
+         var table = "<table id='example' class='table table-bordered'><thead class='thead-dark'><tr><th>emp_id</th><th>email</th></tr><thead><tbody>";
+         $.ajax({
+						type: 'GET',
+                        
+						/*data: email : $(this).val().trim(),*/
+				        
+                        url: 'http://localhost:3000/users/search',
+                        data : { "email" : $(this).val()},					
+                        success : (data) =>{
+                            $.each(data,(index, value) =>{
+                                
+                               
+                                table = table + "<tr ><td >"+value.emp_id+"</td><td class='emailval'>"+value.name+"</td></tr>";
+                            })
+                            
+                        }
+                    }).done(function() {
+    console.log( "second success" );
+    table = table + "</tbody></table>";
+    $("#receivedData").html(table);
+  })
+  .fail(function() {
+    console.log( "error" );
+  })
+  .always(function() {
+    console.log( "complete" );
+  });
+});
+
+
+
+
+ 
+});
+
+$('#receivedData').on('click' , '.emailval',function(){
+    $('#email').val($(this).text());
+} );
+
+
+
+  </script>
+  </body>
+</html>
+

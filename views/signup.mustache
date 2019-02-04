@@ -1,0 +1,151 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Sign up Page</title>
+
+    <style type="text/css">
+    body{
+       background-color : #F0F0F0;
+    }
+	
+
+
+	.login-form {
+		width: 450px;
+    	
+        margin-top:40px;
+        margin-left:25vw;
+	}
+    .login-form form {
+    	margin-bottom: 15px;
+        background: white;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+    .login-form h2 {
+        margin: 0 0 15px;
+    }
+    .form-control, .btn {
+        min-height: 38px;
+        border-radius: 2px;
+    }
+    .btn {        
+        font-size: 15px;
+        font-weight: bold;
+        width: 150px;
+        margin-left: 120px;
+    }
+</style>
+</style>
+  </head>
+  <body>
+
+  <div class='container'>
+      <div class="login-form">
+    
+ <form action="http://localhost:1238/users/signup" method="POST" enctype="multipart/form-data">
+ <h2 class="text-center">Sign up</h2> 
+ <div class="form-group">
+    <label for="type">Type : </label></br>
+    <span id='selectError' name='seelctError' style="color:red;"></span>
+    <input type="text" class="form-control" id="type" name="type" list="types" data-list="{'valueCompletion': true, 'highlight': true}">
+    <datalist id="types">
+    {{#menu}}
+        <option value='{{name}}'>{{name}}</option>
+    {{/menu}}
+    </datalist>
+    
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email : </label>
+    <input type="text" class="form-control" id="email" name="email">
+  </div>
+  <div class="form-group">
+    <label for="password">Profile picture:</label>
+    <input type="file" name="profile" id="profile" accept="image/*">
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" class="form-control" id="password" name="password" >
+  </div>
+  
+  <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </div>
+</form>
+
+
+    
+</div>
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <script>
+
+
+
+
+  $(document).ready(function() {
+
+      //implement datalist and override UI in modern browsers
+if (window.webshims) {
+    webshims.setOptions('forms', {
+        customDatalist: true
+    });
+    webshims.polyfill('forms');
+}
+  
+     $('#type').on('input',function(e){
+         const opVal = $(this).val();
+    $('#types option').each(function(){
+        if(opVal.length > 0 && $(this).val().trim() !== opVal.trim() )
+        {
+            console.log($(this).val().trim() !== opVal.trim());
+            console.log(opVal.trim());
+            console.log($(this).val().trim());
+            $('#selectError').html('Invalid Input');
+        }
+        else
+        {
+            console.log($(this).val().trim() !== opVal.trim());
+            console.log(opVal.trim());
+            console.log($(this).val().trim());
+            $('#selectError').html('');
+            return false;
+        }
+    });
+});
+
+
+
+    $(".edit").click(function() {
+        const name = ($('#'+$(this).data("id")+' .name').html());
+
+        const price = ($('#'+$(this).data("id")+' .price').html());
+
+        const country = ($('#'+$(this).data("id")+' .country').html());
+        $('#editForm')
+        .html("<div class='container design'><form action='http://localhost:1238/products/update/"+$(this).data("id")+"' method='POST'><div class='form-group'><label for='name'>name</label><input type='text' class='form-control' id='name' name='name' value='"+name+"'></div><div class='form-group'><label for='price'>Price:</label><input type='text' class='form-control' id='price' name='price' value='"+price+"' ></div><div class='form-group'><label for='country'>Price:</label><input type='text' class='form-control' id='country' name='country' value='"+country+"' ></div><button type='submit' class='btn btn-success'>Submit</button></form></div>");
+        });
+});
+
+
+  </script>
+  </body>
+</html>
+

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Products</title>
+
+    <style type="text/css">
+    body{
+       background-color : #F0F0F0;
+    }
+	.design{
+        background-color: white;
+        padding-top: 10px;
+        border: solid grey 1px;
+        width: 65%;
+        padding-bottom: 10px;
+	-webkit-box-shadow: 0 3px 2px #777;
+	-moz-box-shadow: 0 3px 2px #777;
+	box-shadow: 0 3px 2px #777;
+}
+</style>
+  </head>
+  <body>
+
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Application</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <br><br>
+    <div class="container ">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+           <h2>Products</h2>
+                <ul class="list-group">
+
+                {{#data}}
+                <div id={{_id}}>
+                    <li class="list-group-item"><span class='name'>{{name}}</span>&nbsp,&nbsp <span class='price'>{{price}}</span>&nbsp <span class='country'>{{country}}</span> <a href="/products/{{_id}}" class="btn btn-danger">x</a>&nbsp;&nbsp;<a class="btn btn-success edit" data-id="{{_id}}">Edit</a></li>
+                </div>
+                {{/data}}
+                </ul></br>
+                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Add +
+</button>
+        </div>
+       
+       </div>
+        
+    </div>
+    
+</br></br>
+
+  
+ 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="http://localhost:1238/products/new" method="POST">
+  <div class="form-group">
+    <label for="name">name</label>
+    <input type="text" class="form-control" id="name" name="name">
+  </div>
+  <div class="form-group">
+    <label for="price">Price:</label>
+    <input type="text" class="form-control" id="price" name="price" >
+  </div>
+  <div class="form-group">
+    <label for="country">Country:</label>
+    <input type="text" class="form-control" id="country" name="country" >
+  </div>
+  
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="editForm">
+</div>
+
+
+        </div>
+      
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+
+
+  $(document).ready(function() {
+    $(".edit").click(function() {
+        const name = ($('#'+$(this).data("id")+' .name').html());
+
+        const price = ($('#'+$(this).data("id")+' .price').html());
+
+        const country = ($('#'+$(this).data("id")+' .country').html());
+        $('#editForm')
+        .html("<div class='container design'><form action='http://localhost:1238/products/update/"+$(this).data("id")+"' method='POST'><div class='form-group'><label for='name'>name</label><input type='text' class='form-control' id='name' name='name' value='"+name+"'></div><div class='form-group'><label for='price'>Price:</label><input type='text' class='form-control' id='price' name='price' value='"+price+"' ></div><div class='form-group'><label for='country'>Price:</label><input type='text' class='form-control' id='country' name='country' value='"+country+"' ></div><button type='submit' class='btn btn-success'>Submit</button></form></div>");
+        });
+});
+
+
+  </script>
+  </body>
+</html>
